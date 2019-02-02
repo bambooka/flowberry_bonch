@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `shop_flowberry` /*!40100 DEFAULT CHARACTER SET utf8_unicode_ci */;
+CREATE DATABASE  IF NOT EXISTS `shop_flowberry` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `shop_flowberry`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
 --
@@ -28,11 +28,11 @@ CREATE TABLE `customer` (
   `id_customer` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `data_of_birth` varchar(255) DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_customer`),
   UNIQUE KEY `id_customer_UNIQUE` (`id_customer`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,12 +43,19 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `feedback` (
-  `id_customer` int(11) NOT NULL,
+  `id_feedback` int(11) NOT NULL,
+  `id_customer` int(11) DEFAULT NULL,
   `id_item` int(11) NOT NULL,
-  `message` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
   `rating` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id_customer`,`id_item`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `customer_id_customer` int(11) NOT NULL,
+  `item_id_item` int(11) NOT NULL,
+  PRIMARY KEY (`id_feedback`),
+  KEY `fk_feedback_customer1_idx` (`customer_id_customer`),
+  KEY `fk_feedback_item1_idx` (`item_id_item`),
+  CONSTRAINT `fk_feedback_customer1` FOREIGN KEY (`customer_id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_feedback_item1` FOREIGN KEY (`item_id_item`) REFERENCES `item` (`id_item`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,12 +67,12 @@ DROP TABLE IF EXISTS `item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `item` (
   `id_item` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `type` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `type` varchar(45) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_item`),
   UNIQUE KEY `id_item_UNIQUE` (`id_item`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,9 +83,32 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
+  `id_order` int(11) NOT NULL AUTO_INCREMENT,
+  `id_customer` int(11) DEFAULT NULL,
   `id_item` int(11) DEFAULT NULL,
-  `id_customer` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `customer_id_customer` int(11) NOT NULL,
+  PRIMARY KEY (`id_order`),
+  KEY `fk_order_customer1_idx` (`customer_id_customer`),
+  CONSTRAINT `fk_order_customer1` FOREIGN KEY (`customer_id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `order_has_item`
+--
+
+DROP TABLE IF EXISTS `order_has_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_has_item` (
+  `order_id_order` int(11) NOT NULL,
+  `item_id_item` int(11) NOT NULL,
+  PRIMARY KEY (`order_id_order`,`item_id_item`),
+  KEY `fk_order_has_item_item1_idx` (`item_id_item`),
+  KEY `fk_order_has_item_order1_idx` (`order_id_order`),
+  CONSTRAINT `fk_order_has_item_order1` FOREIGN KEY (`order_id_order`) REFERENCES `order` (`id_order`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_has_item_item1` FOREIGN KEY (`item_id_item`) REFERENCES `item` (`id_item`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -90,4 +120,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-02 14:39:13
+-- Dump completed on 2019-02-02 18:02:43

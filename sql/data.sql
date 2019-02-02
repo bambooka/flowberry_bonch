@@ -1,4 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `shop_flowberry` /*!40100 DEFAULT CHARACTER SET utf8_unicode_ci */;
 USE `shop_flowberry`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
 --
