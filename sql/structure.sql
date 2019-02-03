@@ -93,6 +93,37 @@ CREATE TABLE `item` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Temporary view structure for view `item_feedback`
+--
+
+DROP TABLE IF EXISTS `item_feedback`;
+/*!50001 DROP VIEW IF EXISTS `item_feedback`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `item_feedback` AS SELECT 
+ 1 AS `customer_id`,
+ 1 AS `item_id`,
+ 1 AS `message`,
+ 1 AS `rating`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `item_list`
+--
+
+DROP TABLE IF EXISTS `item_list`;
+/*!50001 DROP VIEW IF EXISTS `item_list`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `item_list` AS SELECT 
+ 1 AS `id`,
+ 1 AS `name`,
+ 1 AS `description`,
+ 1 AS `price`,
+ 1 AS `image`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `order`
 --
 
@@ -100,14 +131,113 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_customer_idx` (`customer_id`),
   CONSTRAINT `fk_order_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `order_count`
+--
+
+DROP TABLE IF EXISTS `order_count`;
+/*!50001 DROP VIEW IF EXISTS `order_count`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `order_count` AS SELECT 
+ 1 AS `customer_id`,
+ 1 AS `order_count`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `order_history`
+--
+
+DROP TABLE IF EXISTS `order_history`;
+/*!50001 DROP VIEW IF EXISTS `order_history`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `order_history` AS SELECT 
+ 1 AS `id`,
+ 1 AS `customer_id`,
+ 1 AS `date`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `item_feedback`
+--
+
+/*!50001 DROP VIEW IF EXISTS `item_feedback`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `item_feedback` AS select `feedback`.`customer_id` AS `customer_id`,`feedback`.`item_id` AS `item_id`,`feedback`.`message` AS `message`,`feedback`.`rating` AS `rating` from `feedback` order by `feedback`.`rating` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `item_list`
+--
+
+/*!50001 DROP VIEW IF EXISTS `item_list`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `item_list` AS select `item`.`id` AS `id`,`item`.`name` AS `name`,`item`.`description` AS `description`,`item`.`price` AS `price`,`item`.`image` AS `image` from `item` order by `item`.`price` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `order_count`
+--
+
+/*!50001 DROP VIEW IF EXISTS `order_count`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `order_count` AS select `order`.`customer_id` AS `customer_id`,count(0) AS `order_count` from `order` group by `order`.`customer_id` order by count(0) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `order_history`
+--
+
+/*!50001 DROP VIEW IF EXISTS `order_history`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `order_history` AS select `order`.`id` AS `id`,`order`.`customer_id` AS `customer_id`,`order`.`date` AS `date` from (`customer` join `order` on((`customer`.`id` = `order`.`customer_id`))) order by `order`.`customer_id`,`order`.`date` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -118,4 +248,4 @@ CREATE TABLE `order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-03 13:41:00
+-- Dump completed on 2019-02-03 14:45:10
