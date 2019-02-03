@@ -1,4 +1,3 @@
-USE `shop_flowberry`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
 --
 -- Host: 127.0.0.1    Database: shop_flowberry
@@ -15,6 +14,15 @@ USE `shop_flowberry`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `cart`
+--
+
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `customer`
@@ -41,7 +49,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `item` WRITE;
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
-INSERT INTO `item` VALUES (1,'Ежевичное утро','Браслет',1500),(2,'Лазурный восторг','Брошь',900),(3,'Летняя свежесть','Комплект',2000),(4,'Кельтский мотив','Серьги',1200),(5,'Розовые ноты','Кулон',300),(6,'Лиловые грезы','Комплект',2500),(7,'Осеннее настроение','Комплект',2500),(8,'Фруктовый микс','Ложка',1000),(9,'Палитра нежности','Кулон',500),(10,'Игривость','Ободок',300),(11,'Морошки','Кулон',500);
+INSERT INTO `item` VALUES (1,'Ежевичное утро','Браслет',1500,'noimage'),(2,'Лазурный восторг','Брошь',900,'noimage'),(3,'Летняя свежесть','Комплект',2000,'noimage'),(4,'Кельтский мотив','Серьги',1200,'noimage'),(5,'Розовые ноты','Кулон',300,'noimage'),(6,'Лиловые грезы','Комплект',2500,'noimage'),(7,'Осеннее настроение','Комплект',2500,'noimage'),(8,'Фруктовый микс','Ложка',1000,'noimage'),(9,'Палитра нежности','Кулон',500,'noimage'),(10,'Игривость','Ободок',300,'noimage'),(11,'Морошки','Кулон',500,'noimage');
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,4 +71,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-02 15:28:05
+-- Dump completed on 2019-02-03 13:16:21
