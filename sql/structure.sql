@@ -56,6 +56,19 @@ CREATE TABLE `customer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Temporary view structure for view `customer_count`
+--
+
+DROP TABLE IF EXISTS `customer_count`;
+/*!50001 DROP VIEW IF EXISTS `customer_count`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `customer_count` AS SELECT 
+ 1 AS `city`,
+ 1 AS `customer_count`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `feedback`
 --
 
@@ -137,7 +150,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `fk_customer_idx` (`customer_id`),
   CONSTRAINT `fk_order_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,6 +179,24 @@ SET character_set_client = utf8;
  1 AS `customer_id`,
  1 AS `date`*/;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `customer_count`
+--
+
+/*!50001 DROP VIEW IF EXISTS `customer_count`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `customer_count` AS select `customer`.`address` AS `city`,count(`customer`.`id`) AS `customer_count` from `customer` group by `customer`.`address` order by count(`customer`.`id`) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `item_feedback`
@@ -248,4 +279,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-03 14:45:10
+-- Dump completed on 2019-02-03 15:09:46
