@@ -137,6 +137,19 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `item_sold`
+--
+
+DROP TABLE IF EXISTS `item_sold`;
+/*!50001 DROP VIEW IF EXISTS `item_sold`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `item_sold` AS SELECT 
+ 1 AS `item_id`,
+ 1 AS `item_sold`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `order`
 --
 
@@ -150,7 +163,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`id`),
   KEY `fk_customer_idx` (`customer_id`),
   CONSTRAINT `fk_order_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,6 +248,24 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `item_sold`
+--
+
+/*!50001 DROP VIEW IF EXISTS `item_sold`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `item_sold` AS select `cart`.`item_id` AS `item_id`,sum(`cart`.`amount`) AS `item_sold` from `cart` group by `cart`.`item_id` order by sum(`cart`.`amount`) desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `order_count`
 --
 
@@ -279,4 +310,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-03 15:09:46
+-- Dump completed on 2019-02-03 15:31:51
